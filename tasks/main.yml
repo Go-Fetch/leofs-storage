@@ -13,14 +13,14 @@
   register: fifo_gpg_key
   changed_when: fifo_gpg_key.rc != 0
   ignore_errors: True
-  when: snarl_version_installed.stdout != "{{ leofs_storage_version_required }}"
+  when: leofs_version_installed.stdout != "{{ leofs_storage_version_required }}"
 
 - name: Install Project Fifo GPG Key
   shell: "curl https://project-fifo.net/fifo.gpg | gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import"
   when: fifo_gpg_key.rc != 0
   
 - name: Install/Upgrade LeoFS Storage
-  command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ leofs_release }}'/'{{ leofs_storage_version_required }}'.tgz"
+  command: "yes | pkg_add -u http://release.project-fifo.net/pkg/'{{ leofs_release }}'/'{{ leofs_storage_version_required }}'.tgz"
   when: leofs_version_installed.stdout != "{{ leofs_storage_version_required }}"
 
 - name: Configure LeoFS Storage
