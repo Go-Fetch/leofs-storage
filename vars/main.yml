@@ -7,3 +7,4 @@ leofs_storage_version_required: leo_storage-1.2.7
 leofs_cookie: <<leofs_cookie>>
 leofs_master: <<leofs_master>>
 leofs_slave: <<leofs_slave>>
+fifo_gpg_keyid: BB975564
