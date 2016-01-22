@@ -8,20 +8,8 @@
   changed_when: "leofs_version_installed.stdout != '{{ leofs_storage_version_required }}'"
   ignore_errors: True
 
-- name: Check for Project Fifo GPG Key
-  shell: "gpg --keyring /opt/local/etc/gnupg/pkgsrc.gpg --fingerprint | grep '{{ fifo_gpg_keyid }}'"
-  register: fifo_gpg_key
-  changed_when: fifo_gpg_key.rc != 0
-  ignore_errors: True
-  when: leofs_version_installed.stdout != "{{ leofs_storage_version_required }}"
-
-- name: Install Project Fifo GPG Key
-  shell: "curl https://project-fifo.net/fifo.gpg | gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import"
-  when: fifo_gpg_key.rc != 0
-  
-- name: Install/Upgrade LeoFS Storage
-  command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ leofs_release }}'/'{{ leofs_storage_version_required }}'.tgz"
-  when: leofs_version_installed.stdout != "{{ leofs_storage_version_required }}"
+- include: install.yml
+  when: "leofs_version_installed.stdout != '{{ leofs_storage_version_required }}'"
 
 - name: Configure LeoFS Storage
   template: src=leo_storage-config.j2 dest=/opt/local/leo_storage/etc/leo_storage.conf backup=yes
@@ -29,7 +17,7 @@
 
 - name: Enable EPMD
   service: name=epmd state=started enabled=yes
-  
+
 - name: Enable LeoFS Storage
   service: name=leofs/storage state=started enabled=yes
   notify: Pause For Startup
