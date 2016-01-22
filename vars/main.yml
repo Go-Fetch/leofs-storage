@@ -4,7 +4,7 @@
 
 leofs_release: rel
 leofs_storage_version_required: leo_storage-1.2.16
-leofs_cookie: b24izd4d5g9wpcz64o6p
-leofs_master: manager0@172.16.2.201
-leofs_slave: manager1@172.16.2.202
+leofs_cookie: <<leofs_cookie>>
+leofs_master: <<leofs_master>>
+leofs_slave: <<leofs_slave>>
 fifo_gpg_keyid: BB975564
